@@ -1,0 +1,29 @@
+{
+  "name": "codepen-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/server.js",
+  "scripts": {
+    "start": "node app/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maciejsartys/codepen_boilerplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maciejsartys/codepen_boilerplate/issues"
+  },
+  "homepage": "https://github.com/maciejsartys/codepen_boilerplate#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "grunt-sass": "^1.2.0",
+    "node-sass": "^3.7.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}
