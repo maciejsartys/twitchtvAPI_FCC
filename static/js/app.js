@@ -10,11 +10,22 @@
             document.addEventListener('DOMContentLoaded', fn);
         }
     };
+    
+     var Streamer = function(name, activity, status, icon) {
+            this.name = name;
+            this.activity = activity;
+            this.icon = icon;
+            this.status = status;
+        };
 
     //-----------------------------------------------------------------------------
     // Twitch.tv API interface
 
-    var ApiInterface = function($app) {}
+    var ApiInterface = function(app) {
+        this.app = app;
+        this.view = app.view;
+        this.connectionErrorMessage = "Can't connect to Twitch.tv, please try again later."
+    };
 
     ApiInterface.prototype.queryApi = function(uri, err, success) {
         // build and sent async get request to api
@@ -42,22 +53,28 @@
     ApiInterface.prototype.getChannelDetails = function(channel) {
         this.queryApi('channels/' + channel,
             function(request) {
-                console.log();
-            });
+                this.view.errorDiv = this.connectionErrorMessage;
+            }.bind(this),
+            function(request) {
+                var response = JSON.parse(request.responseText);
+                var channelData = new Streamer(response.name, response.status, response.status, response.logo);
+                this.app.scope.channelsData.push(channelData);
+                this.app.view.renderList();
+        }.bind(this));
     };
 
     //-----------------------------------------------------------------------------
     // View Object
 
     var View = function(scope) {
-        var self = this;
         this.scope = scope;
         this.list = document.getElementById('streamers');
     };
 
     View.prototype.renderList = function() {
+        this.list.innerHTML = '';
 
-        this.scope.streamersData.forEach(function(element) {
+        this.scope.channelsData.forEach(function(element) {
             var li = '<li class=\'' + element.status + '\'>';
             li += '<div><img src=\'' + element.icon + '\'></div>';
             li += '<div class=\'name\'>' + element.name + '</div>';
@@ -71,30 +88,27 @@
 
     var App = function() {
 
-        var streamer = function(name, activity, status, icon) {
-            this.name = name;
-            this.activity = activity;
-            this.icon = icon;
-            this.status = status;
-        };
-
         this.scope = {}
 
         this.view = new View(this.scope);
+        this.api = new ApiInterface(this);
 
         this.scope.channelsNames = ['ESL_SC2', 'freecodecamp', 'storbeck'];
 
-        this.scope.streamersData = [
-            new streamer("ESL_SC2", 'RERUN: StarCraft 2 - LiquidBunny vs. Petraeus (TvZ) - WCS Premier League Season 2 2015 - Ro32 Group A',
-                'online', 'https://static-cdn.jtvnw.net/jtv_user_pictures/ogamingsc2-profile_image-9021dccf9399929e-300x300.jpeg'),
-            new streamer("freecodecamp", 'freecodecamp', 'online', 'https://static-cdn.jtvnw.net/jtv_user_pictures/ogamingsc2-profile_image-9021dccf9399929e-300x300.jpeg'),
-            new streamer("storbeck", 'storbeck', 'online', 'https://static-cdn.jtvnw.net/jtv_user_pictures/ogamingsc2-profile_image-9021dccf9399929e-300x300.jpeg')
-        ];
-        
-        this.view.renderList();
+        this.scope.channelsData = [];
     };
     
-    ready(App);
+    App.prototype.getChannelsData = function(channelsNames) {
+        channelsNames.forEach(function(channel) {
+            this.api.getChannelDetails(channel);
+        }.bind(this));
+    }
     
+    App.prototype.start = function() {
+        this.getChannelsData(this.scope.channelsNames);
+    }
     
+    var app = new App;
+    ready(app.start.bind(app));
+
 })();
