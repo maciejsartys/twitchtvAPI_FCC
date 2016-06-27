@@ -9,7 +9,7 @@
         else {
             document.addEventListener('DOMContentLoaded', fn);
         }
-    };
+    }
     
      var Streamer = function(name, activity, status, icon) {
             this.name = name;
@@ -23,11 +23,10 @@
 
     var ApiInterface = function(app) {
         this.app = app;
-        this.view = app.view;
-        this.connectionErrorMessage = "Can't connect to Twitch.tv, please try again later."
+        this.connectionErrorMessage = "Can't connect to Twitch.tv, please try again later.";
     };
 
-    ApiInterface.prototype.queryApi = function(uri, err, success) {
+    ApiInterface.prototype.queryApi = function(uri, success) {
         // build and sent async get request to api
         // err, success - callback functions for request
 
@@ -39,10 +38,10 @@
                     success(request);
                 }
                 else {
-                    err(request);
+                    this.app.view.errorDiv = this.connectionErrorMessage.bind;
                 }
             }
-        };
+        }.bind(this);
 
         request.open('GET', 'https://api.twitch.tv/kraken/' + uri, true);
 
@@ -52,12 +51,10 @@
 
     ApiInterface.prototype.getChannelDetails = function(channel) {
         this.queryApi('channels/' + channel,
-            function(request) {
-                this.view.errorDiv = this.connectionErrorMessage;
-            }.bind(this),
+            
             function(request) {
                 var response = JSON.parse(request.responseText);
-                var channelData = new Streamer(response.name, response.status, response.status, response.logo);
+                var channelData = new Streamer(response.name, response.status, null, response.logo);
                 this.app.scope.channelsData.push(channelData);
                 this.app.view.renderList();
         }.bind(this));
@@ -88,7 +85,7 @@
 
     var App = function() {
 
-        this.scope = {}
+        this.scope = {};
 
         this.view = new View(this.scope);
         this.api = new ApiInterface(this);
@@ -102,11 +99,11 @@
         channelsNames.forEach(function(channel) {
             this.api.getChannelDetails(channel);
         }.bind(this));
-    }
+    };
     
     App.prototype.start = function() {
         this.getChannelsData(this.scope.channelsNames);
-    }
+    };
     
     var app = new App;
     ready(app.start.bind(app));
