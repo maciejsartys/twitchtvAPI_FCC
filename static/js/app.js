@@ -24,11 +24,13 @@
     var ApiInterface = function(app) {
         this.app = app;
         this.connectionErrorMessage = "Can't connect to Twitch.tv, please try again later.";
+        this.apiErrorMessage = 'Twitch.tv API error occured';
     };
 
     ApiInterface.prototype.queryApi = function(uri, success) {
         // build and sent async get request to api
-        // err, success - callback functions for request
+        // uri - API endpoint
+        // success - callback functions for request
 
         var request = new XMLHttpRequest();
 
@@ -38,12 +40,15 @@
                     success(JSON.parse(request.responseText));
                 }
                 else {
-                    this.app.view.errorDiv = this.connectionErrorMessage.bind;
+                    this.app.view.errorDiv.innerHTML = this.connectionErrorMessage;
                 }
             }
         }.bind(this);
 
         request.open('GET', 'https://api.twitch.tv/kraken/' + uri, true);
+        request.onerror = function(e) {
+            this.app.view.errorDiv.innerHTML = this.apiErrorMessage;
+        }.bind(this);
 
         request.setRequestHeader('Accept', 'application/vnd.twitchtv.v3+json');
         request.send();
@@ -70,6 +75,7 @@
     var View = function(scope) {
         this.scope = scope;
         this.list = document.getElementById('streamers');
+        this.errorDiv = document.getElementById('error');
     };
 
     View.prototype.renderList = function() {
