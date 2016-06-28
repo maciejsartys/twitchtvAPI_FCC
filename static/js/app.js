@@ -35,7 +35,7 @@
         request.onreadystatechange = function() {
             if (request.readyState === 4) {
                 if (request.status >= 200 || request.status < 400) {
-                    success(request);
+                    success(JSON.parse(request.responseText));
                 }
                 else {
                     this.app.view.errorDiv = this.connectionErrorMessage.bind;
@@ -52,11 +52,15 @@
     ApiInterface.prototype.getChannelDetails = function(channel) {
         this.queryApi('channels/' + channel,
             
-            function(request) {
-                var response = JSON.parse(request.responseText);
-                var channelData = new Streamer(response.name, response.status, null, response.logo);
-                this.app.scope.channelsData.push(channelData);
-                this.app.view.renderList();
+            function(response) {
+                var channelResponse = response;
+                
+                this.queryApi('streams/' + channel, function(response) {
+                    var isOnline = response.stream == null ? 'false' : 'true';
+                    var channelData = new Streamer(channelResponse.name, channelResponse.status, isOnline, channelResponse.logo);
+                    this.app.scope.channelsData.push(channelData);
+                    this.app.view.renderList();
+                }.bind(this));
         }.bind(this));
     };
 
@@ -90,7 +94,7 @@
         this.view = new View(this.scope);
         this.api = new ApiInterface(this);
 
-        this.scope.channelsNames = ['ESL_SC2', 'freecodecamp', 'storbeck'];
+        this.scope.channelsNames = ['ESL_SC2', 'freecodecamp', 'storbeck', 'OgamingSC2'];
 
         this.scope.channelsData = [];
     };
