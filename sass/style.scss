@@ -1,5 +1,265 @@
-$text-color: red;
-
 body {
-  color: $text-color;
+  background-color: rgb(255, 255, 255);
+  font: 400 1em/1.38 Helvetica;
+  color: rgb(0, 0, 0);
+}
+
+.authors {
+  float: left;
+  width: 18.7994791666%;
+  margin-left: 10%;
+  padding-left: 25px;
+  font-size: 1em;
+  line-height: 0;
+  color: rgb(0, 0, 0);
+}
+
+.channel {
+  margin: 10px;
+  position: relative;
+  float: left;
+  width: 255px;
+  height: 258px;
+  border-radius: 5px;
+  background-color: #b2b2b1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+}
+
+.channel-description {
+  position: relative;
+  float: left;
+  clear: both;
+  width: 42.5061274509%;
+  min-height: 189px;
+  margin: 10px 0 0 3.75613%;
+  font-size: 1em;
+  color: rgb(0, 0, 0);
+}
+
+.channel-img {
+  position: relative;
+  float: left;
+  width: 117px;
+  height: 117px;
+  margin: 10px 0 0 10px;
+  border: 1px solid rgb(68, 68, 68);
+  background-color: rgb(222, 222, 222);
+}
+
+.channel-title {
+  float: left;
+  width: 92.5490196078%;
+  margin-left: 3.92157%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 1.188em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+.container {
+  clear: both;
+  padding-top: 80px;
+  padding-right: 1px;
+  padding-left: 1px;
+  margin: auto;
+  width: 80%;
+}
+
+.footer {
+  float: left;
+  clear: both;
+  width: 100%;
+  height: 25px;
+  margin-top: 50px;
+  background-color: rgb(195, 195, 195);
+}
+
+.header {
+  float: left;
+  width: 100%;
+  height: 460px;
+  background-color: #3c1434;
+}
+
+.logo {
+  float: left;
+  width: 264px;
+  height: 55px;
+  min-height: 46px;
+  margin-left: 10%;
+  padding-left: 25px;
+  border-radius: 3px;
+  font-size: 1.813em;
+  line-height: 1.88;
+  color: rgb(255, 255, 255);
+}
+
+.main-channel-description {
+  float: left;
+  clear: both;
+  width: 88.7283236994%;
+  min-height: 146px;
+  margin: 25px 0 0 5.37392%;
+  border-radius: 3px;
+  font-size: 1em;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.main-channel-name {
+  float: left;
+  width: 346px;
+  height: 73px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 3px;
+  font-size: 1.563em;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.main-text {
+  position: relative;
+  float: left;
+  clear: both;
+  z-index: 32;
+  width: 28.8333333333%;
+  height: 244px;
+  margin: 45px 0 0 15.25%;
+}
+
+.section {
+  float: left;
+  clear: both;
+  width: 100%;
+}
+
+.section-name {
+  float: left;
+  margin: 28px 0 0 10%;
+  padding-left: 25px;
+  border-radius: 3px;
+  font-size: 1.688em;
+  color: rgb(0, 0, 0);
+}
+
+.stream-container {
+  float: left;
+  width: 408px;
+  height: 304px;
+  margin: 23px 0 0 5.91667%;
+  background-color: rgb(120, 120, 120);
+}
+@media(max-width: 906px) {
+  .channel .channel-description,
+  .channel .channel-img {
+    position: relative;
+  }
+
+  .container {
+    margin-top: 81px;
+    margin-left: 4.96689%;
+  }
+
+  .container .channel {
+    position: relative;
+  }
+
+  .footer .authors,
+  .header .logo {
+    margin-left: 9.99759%;
+  }
+
+  .header .main-text {
+    position: relative;
+    z-index: 32;
+    width: 30.0220750551%;
+    margin-left: 10.04415%;
+  }
+
+  .header .stream-container {
+    margin-left: 4.89273%;
+  }
+
+  .main-text .main-channel-description {
+    width: 68.9568014705%;
+    margin-left: 16.99219%;
+    font-style: normal;
+  }
+
+  .main-text .main-channel-name {
+    width: auto;
+    text-align: left;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+
+  .section .section-name {
+    width: 84.0679370339%;
+    margin-left: 1.97986%;
+  }
+}
+
+@media(max-width: 840px) {
+  body {
+    font-size: 1em;
+  }
+
+  .channel .channel-description,
+  .channel .channel-img {
+    position: relative;
+  }
+
+  .container {
+    margin-left: 4.96652%;
+  }
+
+  .container .channel {
+    position: relative;
+  }
+
+  .footer .authors {
+    margin-left: 10%;
+    padding-left: 0;
+  }
+
+  .header .logo {
+    margin-left: 9.99628%;
+    padding-left: 0;
+  }
+
+  .header .main-text {
+    position: relative;
+    float: none;
+    clear: none;
+    z-index: 32;
+    width: 33.3333333333%;
+    height: 73px;
+    margin-top: 64px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .header .stream-container {
+    float: none;
+    margin-top: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .main-text .main-channel-description {
+    visibility: hidden;
+    width: 66.9866071428%;
+    margin-top: 50px;
+    margin-left: -53.34003%;
+  }
+
+  .section .section-name {
+    width: 84.0675542846%;
+    margin-left: 1.99219%;
+  }
 }
