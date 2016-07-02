@@ -10,8 +10,8 @@
             document.addEventListener('DOMContentLoaded', fn);
         }
     }
-    
-//-----------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------
 
     /**
      * Streamer Object
@@ -23,14 +23,14 @@
      * @param {string} Online/offline flag based on [GET /streams/:channel/] => stream
      * @param {string} Channel logo url - [GET /channels/:channel/] => logo
      */
-     var Streamer = function(name, activity, status, icon) {
-            this.name = name;
-            this.activity = activity;
-            this.icon = icon;
-            this.status = status;
-        };
+    var Streamer = function(name, activity, status, icon) {
+        this.name = name;
+        this.activity = activity;
+        this.icon = icon;
+        this.status = status;
+    };
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
 
     // Twitch.tv API interface
 
@@ -67,22 +67,24 @@
         request.send();
     };
 
-    ApiInterface.prototype.getChannelDetails = function(channel) {
+    ApiInterface.prototype.getChannelDetails = function(channel, dataItemsCount) {
         this.queryApi('channels/' + channel,
-            
+
             function(response) {
                 var channelResponse = response;
-                
+
                 this.queryApi('streams/' + channel, function(response) {
                     var streamerStatus = response.stream == null ? 'offline' : 'online';
                     var channelData = new Streamer(channelResponse.name, channelResponse.status, streamerStatus, channelResponse.logo);
                     this.app.scope.channelsData.push(channelData);
-                    this.app.view.renderList();
+                    if (this.app.scope.channelsData.length === dataItemsCount) {
+                        this.app.view.renderList();
+                    }
                 }.bind(this));
-        }.bind(this));
+            }.bind(this));
     };
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     // View Object
 
     var View = function(scope) {
@@ -103,7 +105,7 @@
         }.bind(this));
     };
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     // Main App
 
     var App = function() {
@@ -117,17 +119,29 @@
 
         this.scope.channelsData = [];
     };
-    
-    App.prototype.getChannelsData = function(channelsNames) {
-        channelsNames.forEach(function(channel) {
-            this.api.getChannelDetails(channel);
-        }.bind(this));
+
+    App.prototype.getChannelsData = function(channelsNames, callback) {
+        var App = this;
+
+        channelsNames.forEach(function(channel, index, arr) {
+            App.api.queryApi('channels/' + channel, function(response) {
+                var channelResponse = response;
+                App.api.queryApi('streams/' + channel, function(response) {
+                    var streamerStatus = response.stream == null ? 'offline' : 'online';
+                    var channelData = new Streamer(channelResponse.name, channelResponse.status, streamerStatus, channelResponse.logo);
+                    App.scope.channelsData.push(channelData);
+                    if (App.scope.channelsData.length === arr.length) {
+                        callback();
+                    }
+                });
+            });
+        });
     };
-    
+
     App.prototype.start = function() {
-        this.getChannelsData(this.scope.channelsNames);
+        this.getChannelsData(this.scope.channelsNames, this.view.renderList.bind(this.view));
     };
-    
+
     var app = new App;
     ready(app.start.bind(app));
 
