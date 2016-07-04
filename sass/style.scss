@@ -15,7 +15,6 @@ p{
   margin-left: 10%;
   padding-left: 25px;
   font-size: 1em;
-  line-height: 0;
   color: rgb(0, 0, 0);
 }
 
@@ -28,6 +27,11 @@ p{
   border-radius: 5px;
   background-color: #b2b2b1;
   box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .channel-description {
@@ -69,6 +73,11 @@ p{
   padding-left: 1px;
   margin: auto;
   width: 80%;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .footer {
@@ -103,9 +112,8 @@ p{
 .main-channel-description {
   float: left;
   clear: both;
-  width: 88.7283236994%;
+  width: 100%;
   min-height: 146px;
-  margin: 25px 0 0 5.37392%;
   border-radius: 3px;
   font-size: 1em;
   text-align: center;
@@ -114,7 +122,7 @@ p{
 
 .main-channel-name {
   float: left;
-  width: 346px;
+  width: 100%;
   height: 73px;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -122,6 +130,11 @@ p{
   font-size: 1.563em;
   text-align: center;
   color: rgb(255, 255, 255);
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .main-text {
@@ -156,6 +169,7 @@ p{
   margin: 23px 0 0 5.91667%;
   background-color: rgb(120, 120, 120);
 }
+
 @media(max-width: 906px) {
   .channel .channel-description,
   .channel .channel-img {
@@ -194,13 +208,10 @@ p{
   }
 
   .main-text .main-channel-name {
-    width: auto;
     text-align: left;
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    transition: all 0.2s;
+    text-align: center;
+    width: 100%;
+    padding: 0px;
   }
 
   .section .section-name {
@@ -242,8 +253,8 @@ p{
     float: none;
     clear: none;
     z-index: 32;
-    width: 33.3333333333%;
-    height: 73px;
+    width: 100%;
+    height: 85px;
     margin-top: 64px;
     margin-right: auto;
     margin-left: auto;
@@ -258,9 +269,6 @@ p{
 
   .main-text .main-channel-description {
     visibility: hidden;
-    width: 66.9866071428%;
-    margin-top: 50px;
-    margin-left: -53.34003%;
   }
 
   .section .section-name {
