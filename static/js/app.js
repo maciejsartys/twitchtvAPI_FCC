@@ -99,9 +99,20 @@
             li += '<div><img src=\'' + element.icon + '\'></div>';
             li += '<div class=\'name\'>' + element.name + '</div>';
             li += '<div class=\'activity\'>' + element.activity + '</div>' + '</li>';
+            var li = channelToDOM(element.name, element.activity, element.icon);
             this.list.insertAdjacentHTML('beforeend', li);
         }.bind(this));
     };
+
+    function channelToDOM(name, description, image){
+            return '<div class="channel channel-1 clearfix">'
+                + '<h3 class="channel-title">'+name+'</h3>'
+                + '<p class="channel-description channel-description-1">'
+                + description + '</p>'
+                + '<div class="channel-img channel-img-1">'
+                + '<img src="'+image+'"/></div>'
+                + '</div>';
+    }
 
 //-----------------------------------------------------------------------------
     // Main App
