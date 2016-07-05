@@ -106,11 +106,11 @@
     };
 
     View.prototype.channelToDOM = function(name, description, image){
-            return '<div class="channel channel-1 clearfix">'
+            return '<div class="channel clearfix">'
                 + '<h3 class="channel-title">'+name+'</h3>'
-                + '<p class="channel-description channel-description-1">'
+                + '<p class="channel-description">'
                 + description + '</p>'
-                + '<div class="channel-img channel-img-1">'
+                + '<div class="channel-img">'
                 + '<img src="'+image+'"/></div>'
                 + '</div>';
     };
