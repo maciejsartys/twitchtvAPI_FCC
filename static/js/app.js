@@ -89,20 +89,36 @@
 
     var View = function(scope) {
         this.scope = scope;
-        this.mainChannel = document.getElementsByClassName('main-channel');
-        this.otherChannel = document.getElementsByClassName('channels');
+        this.mainChannel = document.getElementsByClassName('main-channel').item(0);
+        this.otherChannels = document.getElementsByClassName('channels').item(0);
         this.errorDiv = document.getElementById('error');
+    };
+    
+    View.prototype.renderPage = function () {
+        
+    };
+    
+    View.prototype.updateMainChannel = function() {
+        
     };
 
     View.prototype.renderList = function() {
         var self = this;
         
-        self.list.innerHTML = '';
-
-        self.scope.channelsData.forEach(function(element) {
-            var li = self.channelToDOM(element.name, element.activity, element.icon);
-            self.list.insertAdjacentHTML('beforeend', li);
+        self.otherChannels.innerHTML = '';
+        
+        //online channels first
+        var listHTML = self.scope.channelsData.filter(function(element) {
+            return element.status === 'online';
+        }).concat(self.scope.channelsData.filter(function(element) {
+            return element.status === 'offline';
+        })).map(function(element) {
+            return this.channelToDOM(element.name, element.activity, element.icon);
+        },this).reduce(function(prev, curr) {
+            return prev + curr;
         });
+        
+        self.otherChannels.insertAdjacentHTML('beforeend', listHTML);
     };
 
     View.prototype.channelToDOM = function(name, description, image){
