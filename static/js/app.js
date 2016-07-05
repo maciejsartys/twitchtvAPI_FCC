@@ -122,16 +122,16 @@
     };
 
     App.prototype.getChannelsData = function(channelsNames, callback) {
-        var App = this;
+        var self = this;
 
         channelsNames.forEach(function(channel, index, arr) {
-            App.api.queryApi('channels/' + channel, function(response) {
+            self.api.queryApi('channels/' + channel, function(response) {
                 var channelResponse = response;
-                App.api.queryApi('streams/' + channel, function(response) {
+                self.api.queryApi('streams/' + channel, function(response) {
                     var streamerStatus = response.stream == null ? 'offline' : 'online';
                     var channelData = new Streamer(channelResponse.name, channelResponse.status, streamerStatus, channelResponse.logo);
-                    App.scope.channelsData.push(channelData);
-                    if (App.scope.channelsData.length === arr.length) {
+                    self.scope.channelsData.push(channelData);
+                    if (self.scope.channelsData.length === arr.length) {
                         callback();
                     }
                 });
