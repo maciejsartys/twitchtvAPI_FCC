@@ -89,7 +89,8 @@
 
     var View = function(scope) {
         this.scope = scope;
-        this.list = document.getElementById('streamers');
+        this.mainChannel = document.getElementsByClassName('main-channel');
+        this.otherChannel = document.getElementsByClassName('channels');
         this.errorDiv = document.getElementById('error');
     };
 
