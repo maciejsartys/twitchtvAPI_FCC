@@ -42,3 +42,7 @@ gitflow
 #compiled css files
 
 static/css/*.css
+
+#compiled js files
+
+static/js/*.js
