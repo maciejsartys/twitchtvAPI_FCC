@@ -8,9 +8,10 @@
  * @param {string} Online/offline flag based on [GET /streams/:channel/] => stream
  * @param {string} Channel logo url - [GET /channels/:channel/] => logo
  */
-var Streamer = function(name, activity, status, icon) {
+var Streamer = function(name, activity, status, icon, url) {
     this.name = name;
     this.activity = activity;
     this.icon = icon;
     this.status = status;
+    this.url = url;
 };
