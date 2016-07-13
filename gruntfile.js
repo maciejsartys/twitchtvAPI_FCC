@@ -25,7 +25,7 @@ module.exports = function(grunt) {
           footer: '})();',
         },
         dist: {
-          src: ['frontend/streamer.js', 'frontend/api.js', 'frontend/view.js', 'frontend/app.js', 'frontend/main/js'],
+          src: ['frontend/streamer.js', 'frontend/api.js', 'frontend/view.js', 'frontend/app.js', 'frontend/main.js'],
           dest: 'static/js/app.js',
         }
       }
