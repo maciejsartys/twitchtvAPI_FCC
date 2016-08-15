@@ -3,6 +3,7 @@
 var View = function(scope) {
     this.scope = scope;
     this.mainChannel = {};
+    this.mainChannel['name'] =  document.getElementsByClassName('main-channel-name').item(0);
     this.mainChannel['description'] = document.getElementsByClassName('main-channel-description').item(0);
     this.otherChannels = document.getElementsByClassName('channels').item(0);
     this.errorDiv = document.getElementById('error');
@@ -30,6 +31,7 @@ View.prototype.updateMainChannel = function(channel) {
     var self = this;
 
     self.mainChannel.description.innerHTML = channel.activity;
+    self.mainChannel.name.innerHTML = '<a href="' + channel.url + '">Free Code Camp</a>';
 };
 
 /**
