@@ -53,7 +53,7 @@ View.prototype.renderList = function(channels) {
     }).concat(channels.filter(function(element) {
         return element.status === 'offline';
     })).map(function(element) {
-        return this.channelToDOM(element.name, element.activity, element.icon);
+        return this.channelToDOM(element.name, element.activity, element.icon, element.url);
     }, this).reduce(function(prev, curr) {
         return prev + curr;
     });
@@ -61,12 +61,14 @@ View.prototype.renderList = function(channels) {
     self.otherChannels.insertAdjacentHTML('beforeend', listHTML);
 };
 
-View.prototype.channelToDOM = function(name, description, image) {
+View.prototype.channelToDOM = function(name, description, image, link) {
     return '<div class="channel clearfix">' +
-        '<h3 class="channel-title">' + name + '</h3>' +
+        '<a href="' + link + '">' +
+            '<h3 class="channel-title">' + name + '</h3>' +
+        '</a>' +
         '<p class="channel-description">' +
-        description + '</p>' +
+            description + '</p>' +
         '<div class="channel-img">' +
-        '<img src="' + image + '"/></div>' +
+            '<img src="' + image + '"/></div>' +
         '</div>';
 };
