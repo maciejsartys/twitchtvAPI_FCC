@@ -3,6 +3,7 @@
 var View = function(scope) {
     this.scope = scope;
     this.mainChannel = {};
+    this.mainChannel['name'] =  document.getElementsByClassName('main-channel-name').item(0);
     this.mainChannel['description'] = document.getElementsByClassName('main-channel-description').item(0);
     this.otherChannels = document.getElementsByClassName('channels').item(0);
     this.errorDiv = document.getElementById('error');
@@ -30,6 +31,7 @@ View.prototype.updateMainChannel = function(channel) {
     var self = this;
 
     self.mainChannel.description.innerHTML = channel.activity;
+    self.mainChannel.name.innerHTML = '<a href="' + channel.url + '">Free Code Camp</a>';
 };
 
 /**
@@ -51,7 +53,7 @@ View.prototype.renderList = function(channels) {
     }).concat(channels.filter(function(element) {
         return element.status === 'offline';
     })).map(function(element) {
-        return this.channelToDOM(element.name, element.activity, element.icon);
+        return this.channelToDOM(element.name, element.activity, element.icon, element.url);
     }, this).reduce(function(prev, curr) {
         return prev + curr;
     });
@@ -59,12 +61,14 @@ View.prototype.renderList = function(channels) {
     self.otherChannels.insertAdjacentHTML('beforeend', listHTML);
 };
 
-View.prototype.channelToDOM = function(name, description, image) {
+View.prototype.channelToDOM = function(name, description, image, link) {
     return '<div class="channel clearfix">' +
-        '<h3 class="channel-title">' + name + '</h3>' +
+        '<a href="' + link + '">' +
+            '<h3 class="channel-title">' + name + '</h3>' +
+        '</a>' +
         '<p class="channel-description">' +
-        description + '</p>' +
+            description + '</p>' +
         '<div class="channel-img">' +
-        '<img src="' + image + '"/></div>' +
+            '<img src="' + image + '"/></div>' +
         '</div>';
 };

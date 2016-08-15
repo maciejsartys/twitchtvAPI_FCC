@@ -22,7 +22,8 @@ App.prototype.getChannelsData = function(channelsNames, callback) {
             var channelResponse = response;
             self.api.queryApi('streams/' + channel, function(response) {
                 var streamerStatus = response.stream == null ? 'offline' : 'online';
-                var channelData = new Streamer(channelResponse.name, channelResponse.status, streamerStatus, channelResponse.logo);
+                var channelData = new Streamer(channelResponse.name, channelResponse.status,
+                streamerStatus, channelResponse.logo, channelResponse.url);
                 self.scope.channelsData.push(channelData);
                 if (self.scope.channelsData.length === arr.length) {
                     callback();

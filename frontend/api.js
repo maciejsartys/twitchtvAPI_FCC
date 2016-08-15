@@ -43,7 +43,8 @@ ApiInterface.prototype.getChannelDetails = function(channel, dataItemsCount) {
 
             this.queryApi('streams/' + channel, function(response) {
                 var streamerStatus = response.stream == null ? 'offline' : 'online';
-                var channelData = new Streamer(channelResponse.name, channelResponse.status, streamerStatus, channelResponse.logo);
+                var channelData = new Streamer(channelResponse.name, channelResponse.status,
+                streamerStatus, channelResponse.logo, channelResponse.url);
                 this.app.scope.channelsData.push(channelData);
                 if (this.app.scope.channelsData.length === dataItemsCount) {
                     this.app.view.renderList();
