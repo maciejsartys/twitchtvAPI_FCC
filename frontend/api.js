@@ -15,40 +15,57 @@ ApiInterface.prototype.queryApi = function(uri, success) {
 
     var request = new XMLHttpRequest();
 
+    function onError(e) {
+        alert("Podczas pobierania dokumentu wystąpił błąd " + e.target.status + ".");
+    }
+
+    request.onerror = onError;
+
     request.onreadystatechange = function() {
+        var self = this;
         if (request.readyState === 4) {
-            if (request.status >= 200 || request.status < 400) {
+            if (request.status >= 200) {
                 success(JSON.parse(request.responseText));
             }
             else {
-                this.app.view.errorDiv.innerHTML = this.connectionErrorMessage;
+                self.app.view.errorDiv.innerHTML = self.connectionErrorMessage;
             }
         }
-    }.bind(this);
+    };
 
     request.open('GET', 'https://api.twitch.tv/kraken/' + uri, true);
     request.onerror = function(e) {
-        this.app.view.errorDiv.innerHTML = this.apiErrorMessage;
-    }.bind(this);
+        var self = this;
+        self.app.view.errorDiv.innerHTML = self.apiErrorMessage;
+    };
 
     request.setRequestHeader('Accept', 'application/vnd.twitchtv.v3+json');
     request.send();
 };
 
+/**
+ * Query API for single channel data from data list. 
+ * 
+ * @param {Array<Object>} Streamers
+ * @param {number}
+ */
+
 ApiInterface.prototype.getChannelDetails = function(channel, dataItemsCount) {
-    this.queryApi('channels/' + channel,
+    console.log(typeof channel, typeof dataItemsCount);
+    var self = this;
+    self.queryApi('channels/' + channel,
 
         function(response) {
             var channelResponse = response;
 
-            this.queryApi('streams/' + channel, function(response) {
+            self.queryApi('streams/' + channel, function(response) {
                 var streamerStatus = response.stream == null ? 'offline' : 'online';
                 var channelData = new Streamer(channelResponse.name, channelResponse.status,
-                streamerStatus, channelResponse.logo, channelResponse.url);
-                this.app.scope.channelsData.push(channelData);
-                if (this.app.scope.channelsData.length === dataItemsCount) {
-                    this.app.view.renderList();
+                    streamerStatus, channelResponse.logo, channelResponse.url);
+                self.app.scope.channelsData.push(channelData);
+                if (self.app.scope.channelsData.length === dataItemsCount) {
+                    self.app.view.renderList();
                 }
-            }.bind(this));
-        }.bind(this));
+            });
+        });
 };
